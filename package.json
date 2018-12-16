@@ -1,0 +1,24 @@
+{
+  "name": "reasonable-chat-server",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "bsb -make-world",
+    "start": "concurrently \"bsb -make-world -w\" \"nodemon ./lib/js/src/Index.bs.js\"",
+    "clean": "bsb -clean-world"
+  },
+  "keywords": [
+    "BuckleScript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "bs-platform": "^4.0.5",
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.6"
+  },
+  "dependencies": {
+    "@glennsl/bs-json": "^3.0.0",
+    "@types/socket.io": "^2.1.2",
+    "socket.io": "^2.2.0"
+  }
+}
