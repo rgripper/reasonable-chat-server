@@ -18,16 +18,16 @@ let addDummyData = () => {
 
 addDummyData();
 
-SocketIO.startServer((broadcast: SocketIO.broadcaster, send: SocketIO.sender, subscribe: SocketIO.clientEventSubscriber) => {
-  let clientAuthentication = ref(ClientMapper.Unauthenticated);
-  subscribe((eventName: string, clientCommand: ClientMapper.clientCommand) => {
+/* SocketIO.startServer((broadcast: SocketIO.broadcaster, send: SocketIO.sender, subscribe: SocketIO.clientEventSubscriber) => {
+  let clientAuthentication = ref(ServerTypes.Unauthenticated);
+  subscribe(eventName: string, clientCommand: ServerTypes.clientCommand) => {
     let (auth, broadcastEvent, replyEvent) =
-      ClientMapper.mapClientCommand(
+      ServerTypes.mapClientCommand(
         clientAuthentication.contents,
         clientCommand,
       );
     clientAuthentication := auth;
-    broadcast(Js.Json.stringify(broadcastedEvent));
+    broadcast(broadcastedEvent);
     send(replyEvent);
   });
-});
+}); */
