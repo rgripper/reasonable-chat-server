@@ -16,11 +16,15 @@ const socketServer = io(httpServer); //, { wsEngine: 'ws', transports: ['websock
 (event, args) => socketServer.emit(event, args);
 const broadcast = (eventName, value) => socketServer.emit(eventName, value);
 
-const startServer = connectionHandler => socketServer.on("connect", socket => {
+const startServer = (eventNames, handler) => socketServer.on("connect", socket => {
   const send = (eventName, value) => socket.emit(eventName, value);
-  const subscribeToEvent = (eventName, handler) => socket.on(eventName, handler);
-  connectionHandler(broadcast, send, subscribeToEvent);
-  httpServer.listen(process.env.PORT || 13000)
+  let socketState = undefined;
+  
+  eventNames.forEach(eventName => socket.on(eventName, data => 
+    // cycle of updating socket state
+    socketState = handler(socketState, eventName, data, send, broadcast)));
+
+  httpServer.listen(process.env.PORT || 13000);
 });
 
 module.exports = {
