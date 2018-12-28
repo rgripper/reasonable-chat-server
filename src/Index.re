@@ -11,23 +11,22 @@ type clientEvent =
 
 let addDummyData = () => {
   let dummyUser = ChatRepository.getOrCreateUser("Dummy user");
-  ChatRepository.addMessage("Are you talking to me?", dummyUser.id);
-  ChatRepository.addMessage("Well I'm the only one here.", dummyUser.id);
+  ChatRepository.addMessage("Are you talking to me?", dummyUser.id)->ignore;
+  ChatRepository.addMessage("Well I'm the only one here.", dummyUser.id)
+  ->ignore;
   ChatRepository.setUserAvailability(false, dummyUser.id);
 };
 
 addDummyData();
 
-/* SocketIO.startServer((broadcast: SocketIO.broadcaster, send: SocketIO.sender, subscribe: SocketIO.clientEventSubscriber) => {
-  let clientAuthentication = ref(ServerTypes.Unauthenticated);
-  subscribe(eventName: string, clientCommand: ServerTypes.clientCommand) => {
-    let (auth, broadcastEvent, replyEvent) =
-      ServerTypes.mapClientCommand(
-        clientAuthentication.contents,
-        clientCommand,
-      );
-    clientAuthentication := auth;
-    broadcast(broadcastedEvent);
-    send(replyEvent);
-  });
-}); */
+SocketIO.startServer((authenticationState, clientCommand, broadcast, send) => {
+  let (newAuthenticationState, eventToBroadcast, eventToSend) =
+    ClientCommandProcessor.processClientCommand(
+      authenticationState,
+      clientCommand,
+    );
+
+  Belt.Option.map(eventToBroadcast, broadcast)->ignore;
+  Belt.Option.map(eventToSend, send)->ignore;
+  newAuthenticationState;
+});

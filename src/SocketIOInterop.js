@@ -16,9 +16,9 @@ const socketServer = io(httpServer); //, { wsEngine: 'ws', transports: ['websock
 (event, args) => socketServer.emit(event, args);
 const broadcast = (eventName, value) => socketServer.emit(eventName, value);
 
-const startServer = (eventNames, handler) => socketServer.on("connect", socket => {
+const startServer = (eventNames, initialSocketState, handler) => socketServer.on("connect", socket => {
   const send = (eventName, value) => socket.emit(eventName, value);
-  let socketState = undefined;
+  let socketState = initialSocketState;
   
   eventNames.forEach(eventName => socket.on(eventName, data => 
     // cycle of updating socket state

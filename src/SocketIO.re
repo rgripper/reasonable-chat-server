@@ -62,6 +62,7 @@ let decodeClientCommand = (json: Js.Json.t): ServerTypes.clientCommand =>
 external js_startServer:
   (
     Js.Array.t(string),
+    ServerTypes.clientAuthentication,
     (
       ServerTypes.clientAuthentication,
       string,
@@ -77,20 +78,24 @@ external js_startServer:
 type clientEventHandler =
   (
     ServerTypes.clientAuthentication,
-    option(ServerTypes.clientCommand),
+    ServerTypes.clientCommand,
     ServerTypes.serverEvent => unit,
     ServerTypes.serverEvent => unit
   ) =>
   ServerTypes.clientAuthentication;
 
+let customEventName = "customEvent";
+let disconnectEventName = "disconnect";
+
 let startServer = (handleClientEvent: clientEventHandler) =>
   js_startServer(
-    [|"customEvent", "disconnect"|],
+    [|customEventName, disconnectEventName|],
+    ServerTypes.Unauthenticated,
     (clientAuthentication, eventName, data, rawBroadcaster, rawSender) =>
     handleClientEvent(
       clientAuthentication,
-      eventName === "disconnect" ? None : Some(decodeClientCommand(data)),
-      x => x->encodeServerEvent->rawBroadcaster("customEvent"),
-      x => x->encodeServerEvent->rawSender("customEvent"),
+      eventName === disconnectEventName ? Logout : decodeClientCommand(data),
+      x => x->encodeServerEvent->rawBroadcaster(customEventName),
+      x => x->encodeServerEvent->rawSender(customEventName),
     )
   );
