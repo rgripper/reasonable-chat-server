@@ -51,17 +51,18 @@ let encodeServerEvent = (serverEvent: ServerTypes.serverEvent): Js.Json.t =>
 let decodeClientCommand = (json: Js.Json.t): ServerTypes.clientCommand =>
   Json.Decode.(
     switch (json |> field("type", int)) {
-    | 0 => Login(json |> field("userName", string))
-    | 1 => Logout
+    | 0 => Logout
+    | 1 => Login(json |> field("userName", string))
     | 2 => PublishMessage(json |> field("text", string))
     | _ => Logout /* TODO */
     }
   );
 
-[@bs.module "SocketIOInterop"]
+[@bs.module "./SocketIOInterop"]
 external js_startServer:
   (
     Js.Array.t(string),
+    string,
     ServerTypes.clientAuthentication,
     (
       ServerTypes.clientAuthentication,
@@ -84,18 +85,20 @@ type clientEventHandler =
   ) =>
   ServerTypes.clientAuthentication;
 
-let customEventName = "customEvent";
+let customClientEventName = "Chat.ClientCommand";
+let customServerEventName = "Chat.ServerEvent";
 let disconnectEventName = "disconnect";
 
 let startServer = (handleClientEvent: clientEventHandler) =>
   js_startServer(
-    [|customEventName, disconnectEventName|],
+    [|customClientEventName, disconnectEventName|],
+    customServerEventName,
     ServerTypes.Unauthenticated,
     (clientAuthentication, eventName, data, rawBroadcaster, rawSender) =>
     handleClientEvent(
       clientAuthentication,
       eventName === disconnectEventName ? Logout : decodeClientCommand(data),
-      x => x->encodeServerEvent->rawBroadcaster(customEventName),
-      x => x->encodeServerEvent->rawSender(customEventName),
+      x => x->encodeServerEvent->rawBroadcaster(customClientEventName),
+      x => x->encodeServerEvent->rawSender(customClientEventName),
     )
   );
