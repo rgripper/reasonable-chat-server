@@ -17,7 +17,7 @@ const startServer = (clientEventNames, serverEventName, initialSocketState, hand
       socketState = handler(socketState, eventName, data, send, broadcast);
     }));
   });
-  httpServer.listen(process.env.PORT || 13000);
+  httpServer.listen(process.env.PORT || 35558);
   console.log('Server is listening on ', httpServer.address());
 }
 

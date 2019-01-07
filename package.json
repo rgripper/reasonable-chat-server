@@ -1,5 +1,6 @@
 {
   "name": "reasonable-chat-server",
+  "main": "lib/js/src/index.bs.js",
   "version": "0.1.0",
   "scripts": {
     "build": "bsb -make-world",

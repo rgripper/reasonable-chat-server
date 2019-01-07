@@ -68,8 +68,8 @@ external js_startServer:
       ServerTypes.clientAuthentication,
       string,
       Js.Json.t,
-      (Js.Json.t, string) => unit,
-      (Js.Json.t, string) => unit
+      Js.Json.t => unit,
+      Js.Json.t => unit
     ) =>
     ServerTypes.clientAuthentication
   ) =>
@@ -98,7 +98,7 @@ let startServer = (handleClientEvent: clientEventHandler) =>
     handleClientEvent(
       clientAuthentication,
       eventName === disconnectEventName ? Logout : decodeClientCommand(data),
-      x => x->encodeServerEvent->rawBroadcaster(customClientEventName),
-      x => x->encodeServerEvent->rawSender(customClientEventName),
+      x => x->encodeServerEvent->rawBroadcaster,
+      x => x->encodeServerEvent->rawSender,
     )
   );
