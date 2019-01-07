@@ -8,6 +8,7 @@ const socketServer = io(httpServer); //, { wsEngine: 'ws', transports: ['websock
 const startServer = (clientEventNames, serverEventName, initialSocketState, handler) => {
   const broadcast = (value) => socketServer.emit(serverEventName, value);
   socketServer.on("connect", socket => {
+    console.log(`Event: connect; socket: ${socket.id}`);
     const send = (value) => socket.emit(serverEventName, value);
     let socketState = initialSocketState;
 
@@ -17,6 +18,7 @@ const startServer = (clientEventNames, serverEventName, initialSocketState, hand
       socketState = handler(socketState, eventName, data, send, broadcast);
     }));
   });
+  console.log('Starting server');
   httpServer.listen(process.env.PORT || 35558);
   console.log('Server is listening on ', httpServer.address());
 }
