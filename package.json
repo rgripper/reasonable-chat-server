@@ -1,10 +1,10 @@
 {
   "name": "reasonable-chat-server",
-  "main": "lib/js/src/index.bs.js",
+  "main": "dist/bundle.js",
   "version": "0.1.0",
   "scripts": {
-    "build": "bsb -make-world",
-    "start": "node ./lib/js/src/Index.bs.js",
+    "dist": "rollup -c",
+    "start": "node dist/bundle.js",
     "dev": "concurrently \"bsb -make-world -w\" \"nodemon ./lib/js/src/Index.bs.js\"",
     "clean": "bsb -clean-world"
   },
@@ -16,7 +16,10 @@
   "devDependencies": {
     "bs-platform": "^4.0.5",
     "concurrently": "^4.1.0",
-    "nodemon": "^1.18.6"
+    "nodemon": "^1.18.6",
+    "rollup": "^1.0.2",
+    "rollup-plugin-bucklescript": "^0.7.0",
+    "rollup-plugin-node-resolve": "^4.0.0"
   },
   "dependencies": {
     "@glennsl/bs-json": "^3.0.0",
