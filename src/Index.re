@@ -19,6 +19,8 @@ let addDummyData = () => {
 
 addDummyData();
 
+Js.Console.log("Starting the server...");
+
 SocketIO.startServer((authenticationState, clientCommand, broadcast, send) => {
   let (newAuthenticationState, eventToBroadcast, eventToSend) =
     ClientCommandProcessor.processClientCommand(
