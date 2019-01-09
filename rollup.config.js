@@ -8,7 +8,9 @@ export default {
     format: 'cjs',
   },
   plugins: [
-    bucklescript(),
+    bucklescript({
+      module: 'es6'
+    }),
     resolve()
   ],
 }

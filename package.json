@@ -1,11 +1,12 @@
 {
   "name": "reasonable-chat-server",
-  "main": "dist/bundle.js",
+  "main": "lib/js/src/Index.bs.js",
   "version": "0.1.0",
   "scripts": {
     "dist": "rollup -c",
-    "start": "node dist/bundle.js",
-    "dev": "concurrently \"bsb -make-world -w\" \"nodemon ./lib/js/src/Index.bs.js\"",
+    "build": "bsb -make-world",
+    "start": "node lib/js/src/Index.bs.js",
+    "dev": "concurrently \"bsb -make-world -w\" \"nodemon lib/js/src/Index.bs.js\"",
     "clean": "bsb -clean-world"
   },
   "keywords": [
