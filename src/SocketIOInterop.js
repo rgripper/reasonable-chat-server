@@ -1,7 +1,10 @@
 const http = require('http');
 const io = require('socket.io');
 
-const httpServer = http.createServer((_, response) => response.end("Chat server is listening"));
+const httpServer = http.createServer(function (request, response) {
+  response.writeHead(200, { "Content-Type": "text/plain" });
+  response.end("Chat server is listening");
+});
 
 const socketServer = io(httpServer, { wsEngine: 'ws', transports: ['websocket'] });
 
