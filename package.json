@@ -5,8 +5,8 @@
   "scripts": {
     "dist": "rollup -c",
     "build": "bsb -make-world",
-    "start": "node lib/js/src/Index.bs.js",
-    "dev": "concurrently \"bsb -make-world -w\" \"nodemon lib/js/src/Index.bs.js\"",
+    "start": "node ./lib/js/src/Index.bs.js",
+    "dev": "concurrently \"bsb -make-world -w\" \"nodemon ./lib/js/src/Index.bs.js\"",
     "clean": "bsb -clean-world"
   },
   "keywords": [
