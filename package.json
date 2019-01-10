@@ -26,5 +26,9 @@
     "@glennsl/bs-json": "^3.0.0",
     "@types/socket.io": "^2.1.2",
     "socket.io": "^2.2.0"
+  },
+  "engines": {
+    "node": "9.7.1",
+    "npm": "5.6.0"
   }
 }
