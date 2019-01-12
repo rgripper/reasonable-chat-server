@@ -3,12 +3,13 @@
   "main": "lib/js/src/Index.bs.js",
   "version": "0.1.0",
   "scripts": {
-    "dist": "rollup -c",
-    "build": "bsb -make-world",
-    "postinstall": "bsb -clean-world && bsb -make-world",
+    "bsb": "bsb",
+    "clean": "yarn bsb -clean-world",
+    "copy-js": "copyfiles -u 1 src/SocketIOInterop.js lib/js/src/",
+    "build": "yarn bsb -make-world && yarn copy-js",
+    "postinstall": "yarn clean && yarn build",
     "start": "node ./lib/js/src/Index.bs.js",
-    "dev": "concurrently \"bsb -make-world -w\" \"nodemon ./lib/js/src/Index.bs.js\"",
-    "clean": "bsb -clean-world"
+    "dev": "concurrently \"bsb -make-world -w\" \"nodemon ./lib/js/src/Index.bs.js\""
   },
   "keywords": [
     "BuckleScript"
@@ -16,13 +17,14 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "bs-platform": "^4.0.18",
     "concurrently": "^4.1.0",
+    "copyfiles": "^2.1.0",
     "nodemon": "^1.18.9"
   },
   "dependencies": {
     "@glennsl/bs-json": "^3.0.0",
     "@types/socket.io": "^2.1.2",
+    "bs-platform": "^4.0.18",
     "socket.io": "^2.2.0"
   },
   "engines": {
