@@ -5,7 +5,7 @@
   "scripts": {
     "dist": "rollup -c",
     "build": "bsb -make-world",
-    "postinstall": "bsb -make-world",
+    "postinstall": "bsb -clean-world && bsb -make-world",
     "start": "node ./lib/js/src/Index.bs.js",
     "dev": "concurrently \"bsb -make-world -w\" \"nodemon ./lib/js/src/Index.bs.js\"",
     "clean": "bsb -clean-world"
