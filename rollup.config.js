@@ -1,16 +1,17 @@
-import bucklescript from 'rollup-plugin-bucklescript'
 import resolve from 'rollup-plugin-node-resolve'
+import commonjs from 'rollup-plugin-commonjs';
 
 export default {
-  input: 'src/Index.re',
+  input: 'lib/js/src/Index.bs.js',
   output: {
     file: 'dist/bundle.js',
     format: 'cjs',
   },
   plugins: [
-    bucklescript({
-      module: 'es6'
+    resolve({
+      jsnext: true,
+      main: true
     }),
-    resolve()
+    commonjs()
   ],
 }

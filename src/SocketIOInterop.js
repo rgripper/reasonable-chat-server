@@ -8,7 +8,7 @@ const httpServer = http.createServer(function (request, response) {
 
 const socketServer = io(httpServer, { wsEngine: 'ws', transports: ['websocket'] });
 
-const startServer = (clientEventNames, serverEventName, initialSocketState, handler) => {
+export const startServer = (clientEventNames, serverEventName, initialSocketState, handler) => {
   const broadcast = (value) => socketServer.emit(serverEventName, value);
   socketServer.on("connect", socket => {
     console.log(`Event: connect; socket: ${socket.id}`);
@@ -24,8 +24,4 @@ const startServer = (clientEventNames, serverEventName, initialSocketState, hand
   console.log('Starting server');
   httpServer.listen(process.env.PORT || 35558);
   console.log('Server is listening on ', httpServer.address());
-}
-
-module.exports = {
-  startServer
 }

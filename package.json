@@ -9,7 +9,8 @@
     "build": "yarn bsb -make-world && yarn copy-js",
     "postinstall": "yarn clean && yarn build",
     "start": "node ./lib/js/src/Index.bs.js",
-    "dev": "concurrently \"bsb -make-world -w\" \"nodemon ./lib/js/src/Index.bs.js\""
+    "dev": "concurrently \"bsb -make-world -w\" \"nodemon ./lib/js/src/Index.bs.js\"",
+    "dist": "yarn build && yarn rollup -c"
   },
   "keywords": [
     "BuckleScript"
@@ -20,7 +21,11 @@
     "bs-platform": "^4.0.18",
     "concurrently": "^4.1.0",
     "copyfiles": "^2.1.0",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "parcel-bundler": "^1.11.0",
+    "rollup": "^1.1.2",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0"
   },
   "dependencies": {
     "@glennsl/bs-json": "^3.0.0",
