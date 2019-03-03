@@ -8443,7 +8443,7 @@ const startServer = (clientEventNames, serverEventName, initialSocketState, hand
     clientEventNames.forEach(eventName => socket.on(eventName, data => {
       console.log(`Event: ${eventName}; data: ${JSON.stringify(data)}`);
       // cycle of updating socket state
-      socketState = handler(socketState, eventName, data, send, broadcast);
+      socketState = handler(socketState, eventName, data, broadcast, send);
     }));
   });
   console.log('Starting server');

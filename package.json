@@ -1,7 +1,7 @@
 {
   "name": "reasonable-chat-server",
   "main": "lib/js/src/Index.bs.js",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "scripts": {
     "bsb": "bsb",
     "clean": "yarn bsb -clean-world",
